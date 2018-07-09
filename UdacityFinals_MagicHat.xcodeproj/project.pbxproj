@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C60355320E460E300DB828A /* SCNVector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C60355220E460E300DB828A /* SCNVector3.swift */; };
 		3C9D5D2120DC7C170053C57D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9D5D2020DC7C170053C57D /* AppDelegate.swift */; };
 		3C9D5D2320DC7C170053C57D /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C9D5D2220DC7C170053C57D /* art.scnassets */; };
 		3C9D5D2520DC7C170053C57D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9D5D2420DC7C170053C57D /* ViewController.swift */; };
 		3C9D5D2820DC7C170053C57D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C9D5D2620DC7C170053C57D /* Main.storyboard */; };
 		3C9D5D2A20DC7C180053C57D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C9D5D2920DC7C180053C57D /* Assets.xcassets */; };
 		3C9D5D2D20DC7C180053C57D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C9D5D2B20DC7C180053C57D /* LaunchScreen.storyboard */; };
+		3CF708DE20E1AF6E00FF7D9A /* Hat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF708DD20E1AF6E00FF7D9A /* Hat.swift */; };
+		3CF708E020E1AF7800FF7D9A /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF708DF20E1AF7800FF7D9A /* Ball.swift */; };
+		3CF708E220E1AF8700FF7D9A /* SCNNode+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CF708E120E1AF8700FF7D9A /* SCNNode+extension.swift */; };
+		3CF708E420E1B51A00FF7D9A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3CF708E320E1B51A00FF7D9A /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C60355220E460E300DB828A /* SCNVector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNVector3.swift; sourceTree = "<group>"; };
 		3C9D5D1D20DC7C170053C57D /* UdacityFinals_MagicHat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UdacityFinals_MagicHat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C9D5D2020DC7C170053C57D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3C9D5D2220DC7C170053C57D /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -24,6 +30,10 @@
 		3C9D5D2920DC7C180053C57D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3C9D5D2C20DC7C180053C57D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3C9D5D2E20DC7C180053C57D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3CF708DD20E1AF6E00FF7D9A /* Hat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hat.swift; sourceTree = "<group>"; };
+		3CF708DF20E1AF7800FF7D9A /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		3CF708E120E1AF8700FF7D9A /* SCNNode+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNNode+extension.swift"; sourceTree = "<group>"; };
+		3CF708E320E1B51A00FF7D9A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +66,7 @@
 		3C9D5D1F20DC7C170053C57D /* UdacityFinals_MagicHat */ = {
 			isa = PBXGroup;
 			children = (
+				3C60355220E460E300DB828A /* SCNVector3.swift */,
 				3C9D5D2020DC7C170053C57D /* AppDelegate.swift */,
 				3C9D5D2220DC7C170053C57D /* art.scnassets */,
 				3C9D5D2420DC7C170053C57D /* ViewController.swift */,
@@ -63,6 +74,10 @@
 				3C9D5D2920DC7C180053C57D /* Assets.xcassets */,
 				3C9D5D2B20DC7C180053C57D /* LaunchScreen.storyboard */,
 				3C9D5D2E20DC7C180053C57D /* Info.plist */,
+				3CF708DD20E1AF6E00FF7D9A /* Hat.swift */,
+				3CF708DF20E1AF7800FF7D9A /* Ball.swift */,
+				3CF708E120E1AF8700FF7D9A /* SCNNode+extension.swift */,
+				3CF708E320E1B51A00FF7D9A /* README.md */,
 			);
 			path = UdacityFinals_MagicHat;
 			sourceTree = "<group>";
@@ -99,6 +114,7 @@
 				TargetAttributes = {
 					3C9D5D1C20DC7C170053C57D = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 				};
 			};
@@ -127,6 +143,7 @@
 			files = (
 				3C9D5D2320DC7C170053C57D /* art.scnassets in Resources */,
 				3C9D5D2D20DC7C180053C57D /* LaunchScreen.storyboard in Resources */,
+				3CF708E420E1B51A00FF7D9A /* README.md in Resources */,
 				3C9D5D2A20DC7C180053C57D /* Assets.xcassets in Resources */,
 				3C9D5D2820DC7C170053C57D /* Main.storyboard in Resources */,
 			);
@@ -139,8 +156,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CF708E220E1AF8700FF7D9A /* SCNNode+extension.swift in Sources */,
+				3CF708E020E1AF7800FF7D9A /* Ball.swift in Sources */,
+				3CF708DE20E1AF6E00FF7D9A /* Hat.swift in Sources */,
 				3C9D5D2520DC7C170053C57D /* ViewController.swift in Sources */,
 				3C9D5D2120DC7C170053C57D /* AppDelegate.swift in Sources */,
+				3C60355320E460E300DB828A /* SCNVector3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +314,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.manimohan.UdacityFinals-MagicHat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -311,7 +332,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.manimohan.UdacityFinals-MagicHat";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -10,9 +10,28 @@ import UIKit
 import SceneKit
 import ARKit
 
-class ViewController: UIViewController, ARSCNViewDelegate {
-
+final class ViewController: UIViewController {
+    
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var magicButton: UIButton!
+    @IBOutlet weak var ballButton: UIButton!
+    
+    private var cameraTransform: matrix_float4x4? {
+        let camera = sceneView.session.currentFrame?.camera
+        return camera?.transform
+    }
+    
+    private var trackingTimer: Timer?
+    private var hatNode: SCNNode?
+    private var hatFloorNode: SCNNode {
+        let node = SCNNode()
+        node.physicsBody = SCNPhysicsBody.dynamic()
+        sceneView.scene.rootNode.addChildNode(node)
+        return node
+    }
+    private var hatNodePlaneAnchor: ARPlaneAnchor?
+    
+    private var balls = [Ball]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,11 +39,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Set the view's delegate
         sceneView.delegate = self
         
-        // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
-        
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene()
         
         // Set the scene to the view
         sceneView.scene = scene
@@ -32,11 +48,16 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let configuration: ARConfiguration
         
-        // Create a session configuration
-        let configuration = ARWorldTrackingConfiguration()
-
-        // Run the view's session
+        // Check the number of degrees of freedom available on the device
+        if ARWorldTrackingConfiguration.isSupported {
+            configuration = ARWorldTrackingConfiguration()
+            (configuration as! ARWorldTrackingConfiguration).planeDetection = .horizontal
+        } else {
+            configuration = AROrientationTrackingConfiguration()
+        }
+        
         sceneView.session.run(configuration)
     }
     
@@ -47,34 +68,71 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.pause()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
+    @IBAction func ballButtonPressed(_ sender: UIButton) {
+        let ballNode = Ball()
+        ballNode.applyTransformation(camera: sceneView.session.currentFrame?.camera)
+        sceneView.scene.rootNode.addChildNode(ballNode)
+        ballNode.applyForce(camera: sceneView.session.currentFrame?.camera)
+        balls.append(ballNode)
     }
+    
+    @IBAction func magicButtonPressed(_ sender: UIButton) {
+        
+        // Hide the balls that are inside the hat
+        balls.filter { $0.inside(hat: hatNode!)}
+            .forEach { $0.isHidden = !$0.isHidden }
+    }
+}
 
-    // MARK: - ARSCNViewDelegate
+extension ViewController: ARSCNViewDelegate {
     
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
     func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
+        // Create an SCNNode for a detect ARPlaneAnchor
+        guard let planeAnchor = anchor as? ARPlaneAnchor, hatNode == nil else {
+            return nil
+        }
+        hatNodePlaneAnchor = planeAnchor
+        let position = SCNVector3Make(anchor.transform.columns.3.x, anchor.transform.columns.3.y, anchor.transform.columns.3.z)
+        hatNode = Hat.loadNew()
+        hatNode?.position = position
+        
+        return hatNode
         
     }
     
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
+    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        guard let planeAnchor = anchor as? ARPlaneAnchor, planeAnchor.center == hatNodePlaneAnchor?.center || hatNodePlaneAnchor == nil else {
+            return
+        }
+        
+        let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.y))
+        hatFloorNode.geometry = plane
         
     }
     
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        if let lightEstimate = sceneView.session.currentFrame?.lightEstimate {
+            sceneView.scene.rootNode.childNode(withName: "omni", recursively: true)?.light?.intensity = lightEstimate.ambientIntensity
+        }
+    }
+    
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+        switch camera.trackingState {
+        case .notAvailable:
+            // display error to user
+            break
+        case .limited:
+            print("Limited tracking available")
+            trackingTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { [weak self] _ in
+                session.run(AROrientationTrackingConfiguration())
+                self?.trackingTimer?.invalidate()
+                self?.trackingTimer = nil
+            })
+        case .normal:
+            if trackingTimer != nil {
+                trackingTimer!.invalidate()
+                trackingTimer = nil
+            }
+        }
     }
 }
